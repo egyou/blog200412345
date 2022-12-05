@@ -1,0 +1,46 @@
+plugins {
+    id 'java'
+    id 'war'
+}
+
+group 'iducs.javaweb.blog200412345'
+version '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    junitVersion = '5.9.0'
+}
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+/* 한글 깨짐 해결 */
+compileJava.options.encoding = 'UTF-8'
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+dependencies {
+    compileOnly('javax:javaee-web-api:8.0.1')
+    implementation('javax.servlet:jstl:1.2')
+
+    implementation('com.oracle.database.jdbc:ojdbc10:19.16.0.0')
+    // implementation group: 'com.oracle.database.jdbc', name: 'ojdbc8', version: '12.2.0.1'
+    implementation 'com.mysql:mysql-connector-j:8.0.31'
+
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.24'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+}
+
+test {
+    useJUnitPlatform()
+}
